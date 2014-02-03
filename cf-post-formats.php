@@ -99,12 +99,17 @@ function cfpf_post_admin_setup() {
 		// the post-format in the current post - a tab will be added
 		// for this format but the default WP post UI will be shown ~sp
 		if (!empty($current_post_format) && !in_array($current_post_format, $post_formats[0])) {
-			array_push($post_formats[0], get_post_format_string($current_post_format));
+			array_push($post_formats[0], $current_post_format);
 		}
 		array_unshift($post_formats[0], 'standard');
 		$post_formats = $post_formats[0];
 
 		include('views/tabs.php');
+
+		// prevent added un-supported custom post format from view output
+		if(($key = array_search($current_post_format, $post_formats)) !== false) {
+			unset($post_formats[$key]);
+		}
 
 		$format_views = array(
 			'link',
