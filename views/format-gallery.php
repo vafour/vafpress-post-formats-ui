@@ -1,29 +1,34 @@
 <div id="cfpf-format-gallery-preview" class="cf-elm-block cf-elm-block-image" style="display: none;">
 	<label><span><?php _e('Gallery Images', 'cf-post-format'); ?></span></label>
 	<div class="cf-elm-container">
+
 		<?php do_action( 'cfpf_before_gallery_meta' ); ?>
-		<?php
 
-		// running this in the view so it can be used by multiple functions
+		<div class="cfpf_gallery_picker">
+			<?php
+				// query the gallery images meta
+				global $post;
+				$images = get_post_meta($post->ID, '_format_gallery_images', true);
+				if( $images !== '' ) {
+					$images = explode(',', $images);
+				} else {
+					$images = array();
+				}
 
-		$attachments = get_posts(array(
-			'post_type' => 'attachment',
-			'numberposts' => -1,
-			'post_status' => null,
-			'post_parent' => $post->ID,
-			'order' => 'ASC',
-			'orderby' => 'menu_order ID',
-		));
-		if ($attachments) {
-			echo '<ul class="gallery">';
-			foreach ($attachments as $attachment) {
-				echo '<li>'.wp_get_attachment_image($attachment->ID, 'thumbnail').'</li>';
-			}
-			echo '</ul>';
-		}
+				echo '<div class="gallery clearfix">';
+				if ($images) {
+					foreach ($images as $image) {
+						$thumbnail = wp_get_attachment_image_src($image, 'thumbnail');
+						echo '<span data-id="' . $image . '" title="' . 'title' . '"><img src="' . $thumbnail[0] . '" alt="" /><i class="fa fa-times"></i></span>';
+					}
+				}
+				echo '</div>';
+			?>
+			<input type="hidden" name="_format_gallery_images" value="<?php echo (empty($images) ? "" : implode(',', $images)); ?>" />
+			<p class="none"><a href="#" class="button cfpf_gallery_button"><?php _e('Pick Images', 'cf-post-format'); ?></a></p>
+		</div>
 
-		?>
-		<p class="none"><a href="#" class="button"><?php _e('Upload Images', 'cf-post-format'); ?></a></p>
-		<?php do_action( 'cfpf_before_gallery_meta' ); ?>
+		<?php do_action( 'cfpf_after_gallery_meta' ); ?>
+
 	</div>
 </div>

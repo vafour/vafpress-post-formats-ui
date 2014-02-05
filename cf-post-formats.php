@@ -56,6 +56,9 @@ function cfpf_admin_init() {
 		if (in_array('audio', $post_formats[0])) {
 			add_action('save_post', 'cfpf_format_audio_save_post');
 		}
+		if (in_array('video', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_gallery_save_post');
+		}
 	}
 }
 add_action('admin_init', 'cfpf_admin_init');
@@ -72,8 +75,10 @@ function cfpf_add_meta_boxes($post_type) {
 			'cf-post-formats',
 			'cfpf_post_format',
 			array(
-				'loading' => __('Loading...', 'cf-post-formats'),
-				'wpspin_light' => admin_url('images/wpspin_light.gif')
+				'loading'      => __('Loading...', 'cf-post-formats'),
+				'wpspin_light' => admin_url('images/wpspin_light.gif'),
+				'media_title'  => __('Pick Gallery Images', 'cf-post-formats'),
+				'media_button' => __('Add Image(s)', 'cf-post-formats')
 			)
 		);
 
@@ -194,6 +199,13 @@ function cfpf_format_video_save_post($post_id) {
 function cfpf_format_audio_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_audio_embed'])) {
 		update_post_meta($post_id, '_format_audio_embed', $_POST['_format_audio_embed']);
+	}
+}
+// action added in cfpf_admin_init()
+
+function cfpf_format_gallery_save_post($post_id) {
+	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_images'])) {
+		update_post_meta($post_id, '_format_gallery_images', $_POST['_format_gallery_images']);
 	}
 }
 // action added in cfpf_admin_init()

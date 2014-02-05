@@ -104,52 +104,79 @@ jQuery(function($) {
 		CF.postFormats.switchWPFormat($(this).attr('href'));
 	});
 
-	// WordPress 3.5 compatibility
-	// props: https://gist.github.com/4192094
-	
-	var postId = $('#post_ID').val();
-	var gallery = wp.media.query({ uploadedTo: postId });
+	// Gallery Management
+	var postId   = $('#post_ID').val(),
+	    $gallery = $('.cfpf_gallery_picker .gallery');
 
-	// Run the query.
-	// This returns a promise (like $.ajax) so you can do things when it completes.
-	gallery.more();
+	cfpfMediaControl = {
 
-	// Bind your events for when the contents of the gallery changes.
-	gallery.on( 'add remove reset', function() {
-		// Something changed, update your stuff.
+		// Init a new media manager or returns existing frame
+		frame: function() {
+			if( this._frame )
+				return this._frame;
 
-		var $preview = $('#cfpf-format-gallery-preview');
-// spinner
-		$preview.find('.cf-elm-container').html('<p><img src="' + cfpf_post_format.wpspin_light + '" alt="' + cfpf_post_format.loading + '" /></p>');
-// AJAX call for gallery snippet
-		$.post(
-			ajaxurl,
-			{
-				'action': 'cfpf_gallery_preview',
-				'id': $('#post_ID').val()
-			},
-			function(response) {
-// replace
-				$preview.replaceWith(response.html);
-// find it again
-				$preview = $('#cfpf-format-gallery-preview')
-				$preview.find('dt a').each(function() {
-					$(this).replaceWith($(this.childNodes)); // remove links
-				}).end();
-// only show if tab is selected
-				if ($('#cf-post-format-tabs a.current').attr('href').indexOf('#post-format-gallery') != -1) {
-					$preview.show();
-				}
-			},
-			'json'
-		);
+			this._frame = wp.media({
+				title: cfpf_post_format.media_title,
+				library: {
+					type: 'image'
+				},
+				button: {
+					text: cfpf_post_format.media_button
+				},
+				multiple: true
+			});
 
-	}, gallery );
+			this._frame.on('open', this.updateFrame).state('library').on('select', this.select);
 
-	
-	$('#cfpf-format-gallery-preview .none a').live('click', function(e) {
-		$('#wp-content-media-buttons .insert-media').mousedown().mouseup().click();
-		e.preventDefault();
+			return this._frame;
+		},
+
+		select: function() {
+			var selection = this.get('selection');
+
+			selection.each(function(model) {
+				var thumbnail = model.attributes.url;
+				if( model.attributes.sizes !== undefined && model.attributes.sizes.thumbnail !== undefined )
+					thumbnail = model.attributes.sizes.thumbnail.url;
+				$gallery.append('<span data-id="' + model.id + '" title="' + model.attributes.title + '"><img src="' + thumbnail + '" alt="" /><i class="fa fa-times"></i></span>');
+				$gallery.trigger('update');
+			});
+		},
+
+		updateFrame: function() {
+		},
+
+		init: function() {
+			$('#wpbody').on('click', '.cfpf_gallery_button', function(e){
+				e.preventDefault();
+				cfpfMediaControl.frame().open();
+			});
+		}
+	}
+	cfpfMediaControl.init();
+
+	$gallery.on('update', function(){
+		var ids = [];
+		$(this).find('span').each(function(){
+			ids.push($(this).data('id'));
+		});
+		$('[name="_format_gallery_images"]').val(ids.join(','));
+	});
+
+	$gallery.sortable({
+		placeholder: "cf-ui-state-highlight",
+		revert: 200,
+		tolerance: 'pointer',
+		stop: function () {
+			$gallery.trigger('update');
+		}
+	});
+
+	$gallery.on('click', 'span i', function(e){
+		$(this).parent().fadeOut(200, function(){
+			$(this).remove();
+			$gallery.trigger('update');
+		});
 	});
 
 });
