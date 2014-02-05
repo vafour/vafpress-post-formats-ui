@@ -93,12 +93,14 @@ function cfpf_post_admin_setup() {
 	if (!empty($post_formats[0]) && is_array($post_formats[0])) {
 		global $post;
 		$current_post_format = get_post_format($post->ID);
+		$hacked_format       = null;
 
 		// support the possibility of people having hacked in custom
 		// post-formats or that this theme doesn't natively support
 		// the post-format in the current post - a tab will be added
 		// for this format but the default WP post UI will be shown ~sp
 		if (!empty($current_post_format) && !in_array($current_post_format, $post_formats[0])) {
+			$hacked_format = $current_post_format;
 			array_push($post_formats[0], $current_post_format);
 		}
 		array_unshift($post_formats[0], 'standard');
@@ -107,7 +109,7 @@ function cfpf_post_admin_setup() {
 		include('views/tabs.php');
 
 		// prevent added un-supported custom post format from view output
-		if(($key = array_search($current_post_format, $post_formats)) !== false) {
+		if(!is_null($hacked_format) and ($key = array_search($current_post_format, $post_formats)) !== false) {
 			unset($post_formats[$key]);
 		}
 
