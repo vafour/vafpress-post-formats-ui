@@ -138,7 +138,7 @@ jQuery(function($) {
 				var thumbnail = model.attributes.url;
 				if( model.attributes.sizes !== undefined && model.attributes.sizes.thumbnail !== undefined )
 					thumbnail = model.attributes.sizes.thumbnail.url;
-				$gallery.append('<span data-id="' + model.id + '" title="' + model.attributes.title + '"><img src="' + thumbnail + '" alt="" /><i class="fa fa-times"></i></span>');
+				$gallery.append('<span data-id="' + model.id + '" title="' + model.attributes.title + '"><img src="' + thumbnail + '" alt="" /><span class="close">x</span></span>');
 				$gallery.trigger('update');
 			});
 		},
@@ -157,7 +157,7 @@ jQuery(function($) {
 
 	$gallery.on('update', function(){
 		var ids = [];
-		$(this).find('span').each(function(){
+		$(this).find('> span').each(function(){
 			ids.push($(this).data('id'));
 		});
 		$('[name="_format_gallery_images"]').val(ids.join(','));
@@ -172,7 +172,7 @@ jQuery(function($) {
 		}
 	});
 
-	$gallery.on('click', 'span i', function(e){
+	$gallery.on('click', 'span.close', function(e){
 		$(this).parent().fadeOut(200, function(){
 			$(this).remove();
 			$gallery.trigger('update');

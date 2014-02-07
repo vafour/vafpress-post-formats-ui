@@ -9,17 +9,12 @@
 				// query the gallery images meta
 				global $post;
 				$images = get_post_meta($post->ID, '_format_gallery_images', true);
-				if( $images !== '' ) {
-					$images = explode(',', $images);
-				} else {
-					$images = array();
-				}
 
 				echo '<div class="gallery clearfix">';
 				if ($images) {
 					foreach ($images as $image) {
 						$thumbnail = wp_get_attachment_image_src($image, 'thumbnail');
-						echo '<span data-id="' . $image . '" title="' . 'title' . '"><img src="' . $thumbnail[0] . '" alt="" /><i class="fa fa-times"></i></span>';
+						echo '<span data-id="' . $image . '" title="' . 'title' . '"><img src="' . $thumbnail[0] . '" alt="" /><span class="close">x</span></span>';
 					}
 				}
 				echo '</div>';

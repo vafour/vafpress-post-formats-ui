@@ -165,20 +165,21 @@
 	margin: 4px;
 	border: solid 1px #eeeeee;
 }
-.cfpf_gallery_picker .gallery span i{
-	width: 16px;
-	height: 16px;
-	line-height: 16px;
+.cfpf_gallery_picker .gallery span.close{
+	width: 8px;
+	height: 8px;
+	line-height: 8px;
 	position: absolute;
-	top: 5px;
-	right: 5px;
-	line-height: 16px;
+	top: 0px;
+	right: 0px;
 	background: #fff;
 	color: #000;
 	text-align: center;
 	display: none;
+	border: none;
+	cursor: pointer;
 }
-.cfpf_gallery_picker .gallery span:hover i{
+.cfpf_gallery_picker .gallery span:hover span.close{
 	display: block;
 }
 .cfpf_gallery_picker .gallery img{
@@ -197,7 +198,7 @@
 	padding: 5px;
 	border: solid 1px #EFEFEF;
 }
-.cfpf_gallery_picker .gallery span:hover {
+.cfpf_gallery_picker .gallery > span:hover {
 	border: solid 1px #CCC;
 	-moz-box-shadow: 1px 1px 5px #999;
 	-webkit-box-shadow: 1px 1px 5px #999;

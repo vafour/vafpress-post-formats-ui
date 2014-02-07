@@ -205,7 +205,13 @@ function cfpf_format_audio_save_post($post_id) {
 
 function cfpf_format_gallery_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_images'])) {
-		update_post_meta($post_id, '_format_gallery_images', $_POST['_format_gallery_images']);
+		global $post;
+		if( $_POST['_format_gallery_images'] !== '' ) {
+			$images = explode(',', $_POST['_format_gallery_images']);
+		} else {
+			$images = array();
+		}
+		update_post_meta($post_id, '_format_gallery_images', $images);
 	}
 }
 // action added in cfpf_admin_init()
