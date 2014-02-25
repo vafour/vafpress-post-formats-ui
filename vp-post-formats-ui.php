@@ -1,15 +1,21 @@
 <?php
 /*
-Plugin Name: CF Post Formats
-Plugin URI: http://crowdfavorite.com
+Plugin Name: Vafpress Post Formats UI
+Plugin URI: http://vafpress.com
 Description: Custom post format admin UI
-Version: 1.3.1
-Author: crowdfavorite
-Author URI: http://crowdfavorite.com
+Version: 1.5
+Author: vafpress
+Author URI: http://vafpress.com
 */
 
+// ===================================
+// DISCLAIMER
+// ===================================
+// This plugin is a FORKED version of Crowd Favorite, Ltd "CF Post Formats" plugin.
+// Credits goes to them http://crowdfavorite.com
+
 /**
- * Copyright (c) 2011-2013 Crowd Favorite, Ltd. All rights reserved.
+ * Copyright (c) 2013-2014 Vafpress. All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -30,62 +36,62 @@ Author URI: http://crowdfavorite.com
  * **********************************************************************
  */
 
-if (!defined('CFPF_VERSION')) {
+if (!defined('VP_PFUI_VERSION')) {
 
-define('CFPF_VERSION', '1.3');
+define('VP_PFUI_VERSION', '1.5');
 
-function cfpf_base_url() {
-	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
+function vp_pfui_base_url() {
+	return trailingslashit(apply_filters('vp_pfui_base_url', plugins_url('', __FILE__)));
 }
 
-function cfpf_admin_init() {
+function vp_pfui_admin_init() {
 	$post_formats = get_theme_support('post-formats');
 	if (!empty($post_formats[0]) && is_array($post_formats[0])) {
 		if (in_array('link', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_link_save_post');
+			add_action('save_post', 'vp_pfui_format_link_save_post');
 		}
 		if (in_array('status', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
+			add_action('save_post', 'vp_pfui_format_status_save_post', 10, 2);
 		}
 		if (in_array('quote', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
+			add_action('save_post', 'vp_pfui_format_quote_save_post', 10, 2);
 		}
 		if (in_array('video', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_video_save_post');
+			add_action('save_post', 'vp_pfui_format_video_save_post');
 		}
 		if (in_array('audio', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_audio_save_post');
+			add_action('save_post', 'vp_pfui_format_audio_save_post');
 		}
 		if (in_array('video', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_gallery_save_post');
+			add_action('save_post', 'vp_pfui_format_gallery_save_post');
 		}
 	}
 }
-add_action('admin_init', 'cfpf_admin_init');
+add_action('admin_init', 'vp_pfui_admin_init');
 
 // we aren't really adding meta boxes here,
 // but this gives us the info we need to get our stuff in.
-function cfpf_add_meta_boxes($post_type) {
+function vp_pfui_add_meta_boxes($post_type) {
 	if (post_type_supports($post_type, 'post-formats') && current_theme_supports('post-formats')) {
 		// assets
-		wp_enqueue_script('cf-post-formats', cfpf_base_url().'js/admin.js', array('jquery'), CFPF_VERSION);
-		wp_enqueue_style('cf-post-formats', cfpf_base_url().'css/admin.css', array(), CFPF_VERSION, 'screen');
+		wp_enqueue_script('vp-post-formats-ui', vp_pfui_base_url().'js/admin.js', array('jquery'), VP_PFUI_VERSION);
+		wp_enqueue_style('vp-post-formats-ui', vp_pfui_base_url().'css/admin.css', array(), VP_PFUI_VERSION, 'screen');
 
 		wp_localize_script(
-			'cf-post-formats',
-			'cfpf_post_format',
+			'vp-post-formats-ui',
+			'vp_pfui_post_format',
 			array(
-				'loading'      => __('Loading...', 'cf-post-formats'),
+				'loading'      => __('Loading...', 'vp-post-formats-ui'),
 				'wpspin_light' => admin_url('images/wpspin_light.gif'),
-				'media_title'  => __('Pick Gallery Images', 'cf-post-formats'),
-				'media_button' => __('Add Image(s)', 'cf-post-formats')
+				'media_title'  => __('Pick Gallery Images', 'vp-post-formats-ui'),
+				'media_button' => __('Add Image(s)', 'vp-post-formats-ui')
 			)
 		);
 
-		add_action('edit_form_after_title', 'cfpf_post_admin_setup');
+		add_action('edit_form_after_title', 'vp_pfui_post_admin_setup');
 	}
 }
-add_action('add_meta_boxes', 'cfpf_add_meta_boxes');
+add_action('add_meta_boxes', 'vp_pfui_add_meta_boxes');
 
 /**
  * Show the post format navigation tabs
@@ -93,7 +99,7 @@ add_action('add_meta_boxes', 'cfpf_add_meta_boxes');
  *
  * @return void
  */
-function cfpf_post_admin_setup() {
+function vp_pfui_post_admin_setup() {
 	$post_formats = get_theme_support('post-formats');
 	if (!empty($post_formats[0]) && is_array($post_formats[0])) {
 		global $post;
@@ -133,45 +139,45 @@ function cfpf_post_admin_setup() {
 	}
 }
 
-function cfpf_format_link_save_post($post_id) {
+function vp_pfui_format_link_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_link_url'])) {
 		update_post_meta($post_id, '_format_link_url', $_POST['_format_link_url']);
 	}
 }
-// action added in cfpf_admin_init()
+// action added in vp_pfui_admin_init()
 
-function cfpf_format_auto_title_post($post_id, $post) {
+function vp_pfui_format_auto_title_post($post_id, $post) {
 	// get out early if a title is already set
 	if (!empty($post->post_title)) {
 		return;
 	}
 
-	remove_action('save_post', 'cfpf_format_status_save_post', 10, 2);
-	remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
+	remove_action('save_post', 'vp_pfui_format_status_save_post', 10, 2);
+	remove_action('save_post', 'vp_pfui_format_quote_save_post', 10, 2);
 
 	$content = trim(strip_tags($post->post_content));
 	$title = substr($content, 0, 50);
 	if (strlen($content) > 50) {
 		$title .= '...';
 	}
-	$title = apply_filters('cfpf_format_auto_title', $title, $post);
+	$title = apply_filters('vp_pfui_format_auto_title', $title, $post);
 	wp_update_post(array(
 		'ID' => $post_id,
 		'post_title' => $title
 	));
 
-	add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
-	add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
+	add_action('save_post', 'vp_pfui_format_status_save_post', 10, 2);
+	add_action('save_post', 'vp_pfui_format_quote_save_post', 10, 2);
 }
 
-function cfpf_format_status_save_post($post_id, $post) {
+function vp_pfui_format_status_save_post($post_id, $post) {
 	if (has_post_format('status', $post)) {
-		cfpf_format_auto_title_post($post_id, $post);
+		vp_pfui_format_auto_title_post($post_id, $post);
 	}
 }
-// action added in cfpf_admin_init()
+// action added in vp_pfui_admin_init()
 
-function cfpf_format_quote_save_post($post_id, $post) {
+function vp_pfui_format_quote_save_post($post_id, $post) {
 	if (!defined('XMLRPC_REQUEST')) {
 		$keys = array(
 			'_format_quote_source_name',
@@ -184,26 +190,26 @@ function cfpf_format_quote_save_post($post_id, $post) {
 		}
 	}
 	if (has_post_format('quote', $post)) {
-		cfpf_format_auto_title_post($post_id, $post);
+		vp_pfui_format_auto_title_post($post_id, $post);
 	}
 }
-// action added in cfpf_admin_init()
+// action added in vp_pfui_admin_init()
 
-function cfpf_format_video_save_post($post_id) {
+function vp_pfui_format_video_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_video_embed'])) {
 		update_post_meta($post_id, '_format_video_embed', $_POST['_format_video_embed']);
 	}
 }
-// action added in cfpf_admin_init()
+// action added in vp_pfui_admin_init()
 
-function cfpf_format_audio_save_post($post_id) {
+function vp_pfui_format_audio_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_audio_embed'])) {
 		update_post_meta($post_id, '_format_audio_embed', $_POST['_format_audio_embed']);
 	}
 }
-// action added in cfpf_admin_init()
+// action added in vp_pfui_admin_init()
 
-function cfpf_format_gallery_save_post($post_id) {
+function vp_pfui_format_gallery_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_images'])) {
 		global $post;
 		if( $_POST['_format_gallery_images'] !== '' ) {
@@ -214,9 +220,9 @@ function cfpf_format_gallery_save_post($post_id) {
 		update_post_meta($post_id, '_format_gallery_images', $images);
 	}
 }
-// action added in cfpf_admin_init()
+// action added in vp_pfui_admin_init()
 
-function cfpf_gallery_preview() {
+function vp_pfui_gallery_preview() {
 	if (empty($_POST['id']) || !($post_id = intval($_POST['id']))) {
 		exit;
 	}
@@ -229,9 +235,9 @@ function cfpf_gallery_preview() {
 	echo json_encode(compact('html'));
 	exit;
 }
-add_action('wp_ajax_cfpf_gallery_preview', 'cfpf_gallery_preview');
+add_action('wp_ajax_vp_pfui_gallery_preview', 'vp_pfui_gallery_preview');
 
-function cfpf_post_has_gallery($post_id = null) {
+function vp_pfui_post_has_gallery($post_id = null) {
 	if (empty($post_id)) {
 		$post_id = get_the_ID();
 	}
@@ -247,7 +253,7 @@ function cfpf_post_has_gallery($post_id = null) {
 	return (bool) $images->post_count;
 }
 
-function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
+function vp_pfui_pre_ping_post_links($post_links, $pung, $post_id = null) {
 	// return if we don't get a post ID (pre WP 3.4)
 	if (empty($post_id)) {
 		return;
@@ -257,10 +263,10 @@ function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
 		$post_links[] = $url;
 	}
 }
-add_filter('pre_ping', 'cfpf_pre_ping_post_links', 10, 3);
+add_filter('pre_ping', 'vp_pfui_pre_ping_post_links', 10, 3);
 
 // For integration with Social plugin (strips {title} from broadcast format on status posts)
-function cfpf_social_broadcast_format($format, $post) {
+function vp_pfui_social_broadcast_format($format, $post) {
 	if (get_post_format($post) == 'status') {
 		$format = trim(str_replace(
 			array(
@@ -274,6 +280,6 @@ function cfpf_social_broadcast_format($format, $post) {
 	}
 	return $format;
 }
-add_filter('social_broadcast_format', 'cfpf_social_broadcast_format', 10, 2);
+add_filter('social_broadcast_format', 'vp_pfui_social_broadcast_format', 10, 2);
 
 } // end defined check

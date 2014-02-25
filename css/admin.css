@@ -11,74 +11,74 @@
 .clearfix { zoom: 1; }
 
 
-.cf-elm-block {
+.vp-pfui-elm-block {
 	margin-bottom: 18px;
 }
-.cf-elm-block label {
+.vp-pfui-elm-block label {
 	color: #666;
 	display: block;
 	margin-bottom: 2px;
 	padding-left: 10px;
 	text-transform: uppercase;
 }
-.cf-elm-block input[type="text"],
-.cf-elm-block textarea,
-.cf-elm-block select,
-.cf-elm-block .cf-elm-container {
+.vp-pfui-elm-block input[type="text"],
+.vp-pfui-elm-block textarea,
+.vp-pfui-elm-block select,
+.vp-pfui-elm-block .vp-pfui-elm-container {
 	border: 1px #dfdfdf solid;
 }
-.cf-elm-block input[type="text"],
-.cf-elm-block textarea {
+.vp-pfui-elm-block input[type="text"],
+.vp-pfui-elm-block textarea {
 	font-size: 18px;
 	width: 100%;
 }
-.cf-elm-block textarea {
+.vp-pfui-elm-block textarea {
 	height: 161px;
 	padding-left: 8px;
 }
-.cf-elm-block input[type="text"] {
+.vp-pfui-elm-block input[type="text"] {
 	padding-left: 8px;
 }
-.cf-elm-block .description {
+.vp-pfui-elm-block .description {
 	color: #999;
 	display: block;
 	font-size: 11px;
 	line-height: 1.6;
 	padding-left: 10px;
 }
-.cf-elm-block .cf-elm-source {
+.vp-pfui-elm-block .vp-pfui-elm-source {
 	height: 96px;
 }
-.cf-elm-block .cf-elm-container {
+.vp-pfui-elm-block .vp-pfui-elm-container {
 	background: #f0f0f0;
 	padding: 10px;
 }
-.cf-elm-block .cf-elm-container p.none {
+.vp-pfui-elm-block .vp-pfui-elm-container p.none {
 	text-align: center;
 }
-.cf-elm-block .cf-elm-image-gallery {
+.vp-pfui-elm-block .vp-pfui-elm-image-gallery {
 	margin: 0 0 -5px 0;
 	padding: 0;
 }
-.cf-elm-block .cf-elm-container .gallery {
+.vp-pfui-elm-block .vp-pfui-elm-container .gallery {
 	margin: 0;
 	padding-bottom: 8px;
 }
-.cf-elm-block .cf-elm-container .gallery li {
+.vp-pfui-elm-block .vp-pfui-elm-container .gallery li {
 	display: inline-block;
 	margin: 0 8px 8px 0;
 	padding: 0;
 }
-.cf-elm-block .cf-elm-container .gallery li img {
+.vp-pfui-elm-block .vp-pfui-elm-container .gallery li img {
 	vertical-align: middle;
 }
 
-#cfpf-format-gallery-preview .cf-elm-container {
+#vp-pfui-format-gallery-preview .vp-pfui-elm-container {
 	background: #fff;
 }
 
 /* Video Field */
-#cfpf-format-video-embed {
+#vp-pfui-format-video-embed {
 	height: 65px;
 }
 
@@ -97,28 +97,28 @@
 	margin-right: 10px;
 }
 
-#cf-post-format-tabs {
+#vp-post-formats-ui-tabs {
 	margin-bottom: 0;
 }
 
 /** tab navigation
  -------------------------------------------------- */
-.cf-nav {
+.vp-pfui-nav {
 	border-bottom: 1px solid #ccc;
 	margin: 10px 0 20px 0;
 	width: 100%;
 }
-.cf-nav ul {
+.vp-pfui-nav ul {
 	list-style-type: none;
 	margin: 0 10px;
 	padding: 0em;
 }
-.cf-nav ul li,
-.cf-nav ul li a {
+.vp-pfui-nav ul li,
+.vp-pfui-nav ul li a {
 	float: left;
 	margin: 0;
 }
-.cf-nav ul li a {
+.vp-pfui-nav ul li a {
 	display: block;
 	color: #999;
 	background-color: #eee;
@@ -138,25 +138,25 @@
 	-webkit-border-top-right-radius: 3px;
 	border-top-right-radius: 3px;
 }
-.cf-nav ul li a:hover {
+.vp-pfui-nav ul li a:hover {
 	color: #666;
 }
-.cf-nav ul li a.current {
+.vp-pfui-nav ul li a.current {
 	background: none;
 	border: 1px solid #ccc;
 	border-bottom: 1px solid #f1f1f1;
 	color: #464646;
 	margin-bottom: -1px;
 }
-.cf-nav ul li a:focus {
+.vp-pfui-nav ul li a:focus {
 	outline: none;
 }
 
 /* Gallery */
-.cfpf_gallery_picker .gallery{
+.vp-pfui-gallery-picker .gallery{
 	overflow: auto;
 }
-.cfpf_gallery_picker .gallery span{
+.vp-pfui-gallery-picker .gallery span{
 	width: 120px;
 	height: 120px;
 	display: block;
@@ -165,7 +165,7 @@
 	margin: 4px;
 	border: solid 1px #eeeeee;
 }
-.cfpf_gallery_picker .gallery span.close{
+.vp-pfui-gallery-picker .gallery span.close{
 	width: 8px;
 	height: 8px;
 	line-height: 8px;
@@ -179,26 +179,26 @@
 	border: none;
 	cursor: pointer;
 }
-.cfpf_gallery_picker .gallery span:hover span.close{
+.vp-pfui-gallery-picker .gallery span:hover span.close{
 	display: block;
 }
-.cfpf_gallery_picker .gallery img{
+.vp-pfui-gallery-picker .gallery img{
 	width: 100%;
 	height: 100%;
 	display: block;
 }
-.cfpf_gallery_picker .gallery span.cf-ui-state-highlight {
+.vp-pfui-gallery-picker .gallery span.vp-pfui-ui-state-highlight {
 	width: 120px;
 	height: 120px;
 	display: inline-block;
 	border: 1px dotted #bbbbbb;
 	background: #eeeeee;
 }
-.cfpf_gallery_picker .gallery span {
+.vp-pfui-gallery-picker .gallery span {
 	padding: 5px;
 	border: solid 1px #EFEFEF;
 }
-.cfpf_gallery_picker .gallery > span:hover {
+.vp-pfui-gallery-picker .gallery > span:hover {
 	border: solid 1px #CCC;
 	-moz-box-shadow: 1px 1px 5px #999;
 	-webkit-box-shadow: 1px 1px 5px #999;

@@ -1,10 +1,10 @@
-<div id="cfpf-format-gallery-preview" class="cf-elm-block cf-elm-block-image" style="display: none;">
-	<label><span><?php _e('Gallery Images', 'cf-post-format'); ?></span></label>
-	<div class="cf-elm-container">
+<div id="vp-pfui-format-gallery-preview" class="vp-pfui-elm-block vp-pfui-elm-block-image" style="display: none;">
+	<label><span><?php _e('Gallery Images', 'vp-post-formats-ui'); ?></span></label>
+	<div class="vp-pfui-elm-container">
 
-		<?php do_action( 'cfpf_before_gallery_meta' ); ?>
+		<?php do_action( 'vp_pfui_before_gallery_meta' ); ?>
 
-		<div class="cfpf_gallery_picker">
+		<div class="vp-pfui-gallery-picker">
 			<?php
 				// query the gallery images meta
 				global $post;
@@ -20,10 +20,10 @@
 				echo '</div>';
 			?>
 			<input type="hidden" name="_format_gallery_images" value="<?php echo (empty($images) ? "" : implode(',', $images)); ?>" />
-			<p class="none"><a href="#" class="button cfpf_gallery_button"><?php _e('Pick Images', 'cf-post-format'); ?></a></p>
+			<p class="none"><a href="#" class="button vp-pfui-gallery-button"><?php _e('Pick Images', 'vp-post-formats-ui'); ?></a></p>
 		</div>
 
-		<?php do_action( 'cfpf_after_gallery_meta' ); ?>
+		<?php do_action( 'vp_pfui_after_gallery_meta' ); ?>
 
 	</div>
 </div>

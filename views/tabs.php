@@ -1,4 +1,4 @@
-<div id="cf-post-format-tabs" class="cf-nav" style="display: none;">
+<div id="vp-post-formats-ui-tabs" class="vp-pfui-nav" style="display: none;">
 	<ul class="clearfix">
 <?php
 
@@ -6,7 +6,7 @@ foreach ($post_formats as $format) {
 	$class = ($format == $current_post_format || (empty($current_post_format) && $format == 'standard') ? 'current' : '');
 	
 	if ($format == 'standard') {
-		$format_string = __('Standard', 'cf-post-format');
+		$format_string = __('Standard', 'vp-post-formats-ui');
 		$format_hash = 'post-format-0';
 	}
 	else {

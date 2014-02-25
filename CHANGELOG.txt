@@ -1,4 +1,10 @@
-# CF Post Formats
+# Vafpress Post Formats UI
+
+## Version 1.5
+
+- Initial Release For Vafpress Forked Version
+- Modify gallery post format behavior
+- Added some hooks
 
 ## Version 1.3.1
 
