@@ -1,5 +1,5 @@
-wp-post-formats
-===============
+Vafpress Post Formats UI
+========================
 
 Forked version of crowdfavorite's WordPress Post Formats, what's changed?
 
