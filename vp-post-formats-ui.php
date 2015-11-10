@@ -62,7 +62,7 @@ function vp_pfui_admin_init() {
 		if (in_array('audio', $post_formats[0])) {
 			add_action('save_post', 'vp_pfui_format_audio_save_post');
 		}
-		if (in_array('video', $post_formats[0])) {
+		if (in_array('gallery', $post_formats[0])) {
 			add_action('save_post', 'vp_pfui_format_gallery_save_post');
 		}
 	}
